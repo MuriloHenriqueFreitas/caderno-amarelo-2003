@@ -12,17 +12,15 @@ from PIL import Image
 import os
 import re
 
-pasta_imagens = "divididas-sem-bordas-do-meio"
+pasta_imagens = "sem-bordas-externas"
 pasta_saida = "."
 os.makedirs(pasta_saida, exist_ok=True)
 
 # Função para extrair o número da página e ordenar corretamente
 def get_sort_key(nome_arquivo):
-    # Extrai o número da página
-    numero = int(re.search(r'pagina_enem_(\d+)_', nome_arquivo).group(1))
-    # Define a ordem: esquerda primeiro (0), depois direita (1)
-    lado = 0 if 'esquerda' in nome_arquivo else 1
-    return (numero, lado)
+    # Extrai o número da página (ex: pagina_enem_3.png -> 3)
+    numero = int(re.search(r'pagina_enem_(\d+)', nome_arquivo).group(1))
+    return numero
 
 # Pegar e ordenar as imagens corretamente
 arquivos = [f for f in os.listdir(pasta_imagens) if f.endswith('.png')]
